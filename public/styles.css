@@ -143,7 +143,7 @@ textarea {
   color: var(--text);
   border: 1px solid var(--border);
   border-radius: 16px;
-  padding: 14px 16px;
+  padding: 14.5px 16.5px;
   font: inherit;
 }
 
@@ -168,7 +168,7 @@ button:hover {
 }
 
 button:disabled {
-  opacity: 0.6;
+  opacity: 0.67;
   cursor: wait;
 }
 
