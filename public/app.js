@@ -12,7 +12,7 @@ function addMessage(role, text) {
 
   const label = document.createElement('span');
   label.className = 'role';
-  label.textContent = role === 'user' ? 'You' : 'VoxelChat';
+  label.textContent = role === 'user' ? 'You' : 'StabChat';
 
   const body = document.createElement('div');
   body.textContent = text;
@@ -46,7 +46,7 @@ async function loadModels() {
     const fallback = ['llama3.2'];
     activeModels = fallback;
     modelSelect.innerHTML = '<option value="llama3.2">llama3.2</option>';
-    addMessage('bot', `Could not load models from Ollama. Using fallback model: ${fallback[0]}. Make sure Ollama is running.`);
+    addMessage('bot', `Could not load models from LlamaAI. Using fallback model: ${fallback[0]}. Make sure LlamaAI is running.`);
   }
 }
 
@@ -75,7 +75,7 @@ async function sendPrompt(event) {
     const data = await response.json();
 
     if (!response.ok) {
-      throw new Error(data.error || 'Request failed');
+      throw new Error(data.error || 'Request failed!');
     }
 
     const lastMessage = chatMessages.lastElementChild;
