@@ -3,7 +3,7 @@ const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const LlamaAI_BASE_URL = process.env.LlamaAI_BASE_URL || 'http://localhost:11434';
+const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || 'http://localhost:11434';
 const DEFAULT_MODEL = process.env.DEFAULT_MODEL || 'llama3.2';
 
 app.use(express.json({ limit: '10mb' }));
