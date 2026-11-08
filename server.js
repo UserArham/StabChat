@@ -3,7 +3,7 @@ const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || 'http://localhost:11434';
+const LlamaAI_BASE_URL = process.env.LlamaAI_BASE_URL || 'http://localhost:11434';
 const DEFAULT_MODEL = process.env.DEFAULT_MODEL || 'llama3.2';
 
 app.use(express.json({ limit: '10mb' }));
@@ -11,19 +11,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/api/models', async (req, res) => {
   try {
-    const response = await fetch(`${OLLAMA_BASE_URL}/api/tags`);
+    const response = await fetch(`${LlamaAI_BASE_URL}/api/tags`);
 
     if (!response.ok) {
-      throw new Error(`Ollama responded with status ${response.status}`);
+      throw new Error(`LlamaAI responded with status ${response.status}`);
     }
 
     const data = await response.json();
     const models = (data.models || []).map((model) => model.name);
     res.json({ models: models.length ? models : [DEFAULT_MODEL] });
   } catch (error) {
-    console.error('Failed to fetch models from Ollama:', error.message);
+    console.error('Failed to fetch models from LlamaAI:', error.message);
     res.status(502).json({
-      error: 'Could not reach the local Ollama server.',
+      error: 'Could not reach the local LlamaAI server.',
       details: error.message,
       fallbackModel: DEFAULT_MODEL,
     });
@@ -38,7 +38,7 @@ app.post('/api/chat', async (req, res) => {
   }
 
   try {
-    const response = await fetch(`${OLLAMA_BASE_URL}/api/chat`, {
+    const response = await fetch(`${LlamaAI_BASE_URL}/api/chat`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -49,7 +49,7 @@ app.post('/api/chat', async (req, res) => {
     });
 
     if (!response.ok) {
-      throw new Error(`Ollama responded with status ${response.status}`);
+      throw new Error(`LlamaAI responded with status ${response.status}`);
     }
 
     const data = await response.json();
@@ -70,5 +70,5 @@ app.get('*', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`VoxelChat running at http://localhost:${PORT}`);
-  console.log(`Using Ollama at ${OLLAMA_BASE_URL}`);
+  console.log(`Using LlamaAI at ${LlamaAI_BASE_URL}`);
 });
